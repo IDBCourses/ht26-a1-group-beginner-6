@@ -2,7 +2,7 @@
 
 **Play it here:** <!-- Paste your GitHub Pages link here, e.g. https://idbcourses.github.io/ht26-a1-group-01/ -->
 
-**Group:** Mariem Lamouni ,
+**Group:** Mariem Lamouni , Ivana Minova
 
 <!-- One or two sentences: what kind of instrument is it, and what is it like to play? -->
 
