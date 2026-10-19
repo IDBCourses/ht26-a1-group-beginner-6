@@ -227,13 +227,29 @@ function keyUp(event) //Author: as7919
 
 // ---------- Setup ----------
 // Setup is run once, at the start of the program. It sets everything up for us!
-function setup() {
-  update(); // start the update loop
-  use(); // start the use loop
+function setup()
+// Author: as7054
+{
+  console.log("Virtual guitar is ready!");
+  console.log("D, F, G, H = notes");
+  console.log("R, T = fret 1");
+  console.log("R, T, Y = fret 2");
+  console.log("R, T, Y, U = fret 3");
+  console.log("Escape = stop");
 
-  // Put your event listener code here
   window.addEventListener("keydown", keyDown);
   window.addEventListener("keyup", keyUp);
+
+  // Release all notes if the browser loses focus
+
+  window.addEventListener("blur",function ()
+// Author: as7054
+  {
+    synth.releaseAll();
+    activeStrings = [];
+    heldKeys = [];
+  })
+
 }
 
-setup(); // Always remember to call setup()!
+setup();
