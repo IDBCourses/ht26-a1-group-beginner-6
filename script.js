@@ -20,10 +20,13 @@
 
 // ---------- Settings ----------
 // Settings variables should contain all of the "fixed" parts of your programs
-// For example: which key does what, which notes you can play, the tempo.
-const exampleKey = "a"; // the key that plays the example note
-const exampleNote = "C4"; // the note it plays
-
+ // we used a variable that holds an object to map the keys to the notes
+const notes= {
+   d : "E2",
+   f : "A2",
+   g : "D3",
+   h : "G3"
+}
 // ---------- State ----------
 // State variables are the parts of your program that change over time.
 // For example: which octave you're playing in, or whether a drone is on.
@@ -49,18 +52,52 @@ function use() {
 // ---------- Controls (Event Handlers) ----------
 // Runs every time a key goes down.
 function keyDown(event) {
-  Tone.start(); // browsers only allow sound after the player has pressed something
+  const key = event.key.toLowerCase();
+  // Escape stops every note immediately
+ if (key === "escape") {
+    synth.releaseAll();
+    activeStrings = [];
+    heldKeys = [];
+
+    console.log("All notes stopped");
+    return;
+  }
+
 
   // Holding a key down sends keydown again and again. Only react to the first one.
-  if (event.repeat === false) {
-    console.log("Key down:", event.key);
-
-    // Example: replace this with your own instrument.
-    if (event.key === exampleKey) {
-      synth.triggerAttack(exampleNote, Tone.now()); // keeps sounding until triggerRelease
+  let isHeld = false;
+  for (let i = 0; i < heldKeys.length; i++) {
+    if (heldKeys[i] === key) {// check if we are holding the key to prevent repeat
+      isHeld = true;
+      break;
     }
   }
+  if (isHeld) return;// if held ignore it
+   // Add key to our held list
+  heldKeys.push(key);
+
+  // Check if this key is already playing in activeStrings using a simple loop
+  let isAlreadyPlaying = false;
+  for (let i = 0; i < activeStrings.length; i++) {// it tracks the current notes that are playing or ringing
+    if (activeStrings[i].key === key) {
+      isAlreadyPlaying = true;
+      break;
+    }
+  }
+
+  // Start a guitar note if D, F, G or H is pressed
+  if (notes[key] && !isAlreadyPlaying) {// checks if the key is pressed and if the note is not already playing
+    Tone.start();
+    playNote(key);
+  }
 }
+
+
+
+
+
+
+
 
 // Runs every time a key comes up.
 function keyUp(event) {
