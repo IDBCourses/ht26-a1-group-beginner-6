@@ -1,6 +1,8 @@
 # Our instrument
 
-**Play it here:** https://github.com/IDBCourses/ht26-a1-group-beginner-6
+**Play it here:**
+https://idbcourses.github.io/ht26-a1-group-beginner-6/
+
 
 **Group:** Mariem Lamouni , Ivana Minova, Emma Hult, Haya Abbas
 
