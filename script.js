@@ -133,6 +133,28 @@ function playNote(key) {
 
   console.log("Playing:", key.toUpperCase(), "Fret: 0");
 }
+function releaseNote(key)//Author: as7919
+ {
+  // Find where this key is in our active list using a simple loop
+  let index = -1;
+  for (let i = 0; i < activeStrings.length; i++) {
+    if (activeStrings[i].key === key) {
+      index = i;
+      break; // Stop searching once we find it
+    }
+  }
+
+  if (index === -1) return;
+
+  const string = activeStrings[index];
+
+  synth.triggerRelease(string.currentNote);
+
+  // Remove the string from our active list
+  activeStrings.splice(index, 1);
+
+  console.log("Note released");
+}
 // ---------- Controls (Event Handlers) ----------
 // Runs every time a key goes down.
 function keyDown(event)//Author:as5354
@@ -188,13 +210,19 @@ function keyDown(event)//Author:as5354
 
 
 // Runs every time a key comes up.
-function keyUp(event) {
-  console.log("Key up:", event.key);
+function keyUp(event) //Author: as7919
+{
+  const key = event.key.toLowerCase();// TO CATCH THE RELEASED KEY
 
-  // Example: replace this with your own instrument.
-  if (event.key === exampleKey) {
-    synth.triggerRelease(exampleNote, Tone.now());
-  }
+ // Remove key from our held list by keeping everything EXCEPT the released key
+ //It creates a brand new list keeping every key except the one that matches the key we just let go of.
+  heldKeys = heldKeys.filter(function(item) {
+    return item !== key;
+  });
+
+  // Releasing the original note key releases the sound
+  releaseNote(key);
+
 }
 
 // ---------- Setup ----------
