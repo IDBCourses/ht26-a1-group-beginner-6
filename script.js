@@ -27,9 +27,12 @@ const notes= {
    g : "D3",
    h : "G3"
 }
+const swipeTime = 400; // Time window to swipe frets
 // ---------- State ----------
 // State variables are the parts of your program that change over time.
 // For example: which octave you're playing in, or whether a drone is on.
+let activeStrings = []; // A list of notes currently playing
+let heldKeys = []; // A list of keyboard keys currently held down
 
 // ---------- Sound ----------
 // Make the instruments and plug them into the speakers.
@@ -58,11 +61,56 @@ synth.set({
 });
 // ---------- Update ----------
 // Update the state. This is called every 100ms.
-function update() {
-  // Example: replace this with your own instrument.
+function changeFret(key)//Author:as5354
+ {
+  // Only R, T, Y and U count as fret keys
+  if (!"rtyu".includes(key)) return; // to make sure we pressed the correct keys otherwise we stop running the function
 
-  setTimeout(update, 100); // call update() again in 100 milliseconds
+  const now = Date.now();
+
+  // Loop through every currently playing string in our list
+  // makes sure if we press 2 at a time they will both change to the same new fret
+  for (let i = 0; i < activeStrings.length; i++) {
+    const string = activeStrings[i];
+
+    // Reset the swipe if the next tap is too slow it checks how much time passed since the last tap to make sure the swipe ended
+     if ((now - string.lastSwipe) > swipeTime) {
+      string.fretKeys.clear();
+    }
+
+    string.lastSwipe = now; // updates the time to the second we taped
+
+    // Remember each different fret key only once
+    string.fretKeys.add(key); // adds the new key to the strings list under fretKeys
+
+    const count = string.fretKeys.size;// to count how many different keys we have in fretKeys to calculate a new fret
+    let newFret = 0;
+
+    if (count >= 4) {
+      newFret = 3;
+    } else if (count >= 3) {
+      newFret = 2;
+    } else if (count >= 2) {
+      newFret = 1;
+    }
+
+    // Change the note only when the fret changes
+    if (newFret !== string.fret) {
+      synth.triggerRelease(string.currentNote);// stops the old note
+
+      string.fret = newFret;// updates the fret we have currently
+// now we calculate the new note , it takes the starting base note chift it by the fret and then convert it to the new note name
+      string.currentNote = Tone.Frequency(string.baseNote)
+        .transpose(newFret)
+        .toNote();
+
+      synth.triggerAttack(string.currentNote);// plays the new note
+
+      console.log("Fret:", newFret);
+    }
+  }
 }
+
 
 // ---------- Use ----------
 // Use the state to make sound. This is called every 100ms.
@@ -87,7 +135,8 @@ function playNote(key) {
 }
 // ---------- Controls (Event Handlers) ----------
 // Runs every time a key goes down.
-function keyDown(event) {
+function keyDown(event)//Author:as5354
+{
   const key = event.key.toLowerCase();
   // Escape stops every note immediately
  if (key === "escape") {
@@ -125,6 +174,9 @@ function keyDown(event) {
   if (notes[key] && !isAlreadyPlaying) {// checks if the key is pressed and if the note is not already playing
     Tone.start();
     playNote(key);
+  }else {
+    // Otherwise, check whether it is a fret swipe
+    changeFret(key);
   }
 }
 
