@@ -2,7 +2,9 @@
 
 **Play it here:** <!-- Paste your GitHub Pages link here, e.g. https://idbcourses.github.io/ht26-a1-group-01/ -->
 
-**Group:** Mariem Lamouni , Ivana Minova, Emma Hult
+**Group:** Mariem Lamouni , Ivana Minova, Emma Hult, Haya Abbas
+
+Guitar, plays different notes and lets you change the fret on the guitarr
 
 <!-- One or two sentences: what kind of instrument is it, and what is it like to play? -->
 
@@ -11,9 +13,17 @@
 <!-- Which keys do what? Fill in the table, and add a row for every key or group of keys. -->
 
 | Key | What it does                                                |
-| --- | ----------------------------------------------------------- |
-| `A` | Plays a C4 while you hold it down (the example: replace it) |
-|     |                                                             |
+| "D" | Plays a E2 while you hold it down|
+| "F" | Plays a A2 while you hold it down|
+| "G" | Plays a D3 while you hold it down|
+| "H" | Plays a G3 while you hold it down|
+| "R,T,Y,U" | kep holding down the key and swipe with these keys, starting with R to change the fret of the note or notes you played. each key after "R" added will determen what the fret is.
+|"D/F/G/H"+"R"+"T"| plays the key with fret 1"
+|"D/F/G/H"+"R"+"T"+"Y"| plays the key with fret 2"
+|"D/F/G/H"+"R"+"T"+"Y"+"U"| plays the key with fret 3"
+
+Start by trying out the base notes with "D","F","G","H", then try pressing one of them and swiping the keyboard left to right starting with "R". 
+
 
 <!-- Anything else a player needs to know: how to get started, combinations of keys, a good thing to try first. -->
 
