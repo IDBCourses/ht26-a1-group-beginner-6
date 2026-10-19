@@ -33,8 +33,29 @@ const notes= {
 
 // ---------- Sound ----------
 // Make the instruments and plug them into the speakers.
-const synth = new Tone.PolySynth(Tone.Synth).toDestination(); // can play several notes at once
+//author: at2799
+const reverb = new Tone.Reverb(2).toDestination();// 2 s of delay in the echo
+const synth = new Tone.PolySynth(Tone.FMSynth).connect(reverb);
 
+synth.set({
+  harmonicity: 3.01,
+  modulationIndex: 10,
+  oscillator: { type: "sine" },
+  envelope: {
+    attack: 0.01,
+    decay: 1,
+    sustain: 0.1,
+    release: 1,
+  },
+  modulation: { type: "square" },
+  modulationEnvelope: {
+    attack: 0.01,
+    decay: 0.5,
+    sustain: 0.1,
+    release: 0.5,
+  },
+  volume: -10,
+});
 // ---------- Update ----------
 // Update the state. This is called every 100ms.
 function update() {
@@ -45,10 +66,25 @@ function update() {
 
 // ---------- Use ----------
 // Use the state to make sound. This is called every 100ms.
-function use() {
-  setTimeout(use, 100); // call use() again in 100 milliseconds
-}
 
+function playNote(key) {
+  const note = notes[key];
+
+  //author: at2799
+  // Add a new string object into our active list  where we add the properties of the note
+  activeStrings.push({
+    key: key,
+    baseNote: note,
+    currentNote: note,
+    fret: 0,
+    fretKeys: new Set(),// create a new set/ list  for the fretkeys
+    lastSwipe: Date.now(),
+  });
+
+  synth.triggerAttack(note);
+
+  console.log("Playing:", key.toUpperCase(), "Fret: 0");
+}
 // ---------- Controls (Event Handlers) ----------
 // Runs every time a key goes down.
 function keyDown(event) {
