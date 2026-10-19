@@ -1,6 +1,6 @@
 # Our instrument
 
-**Play it here:** <!-- Paste your GitHub Pages link here, e.g. https://idbcourses.github.io/ht26-a1-group-01/ -->
+**Play it here:** https://github.com/IDBCourses/ht26-a1-group-beginner-6
 
 **Group:** Mariem Lamouni , Ivana Minova, Emma Hult, Haya Abbas
 
@@ -22,7 +22,7 @@ Guitar, plays different notes and lets you change the fret on the guitarr
 |"D/F/G/H"+"R"+"T"+"Y"| plays the key with fret 2"
 |"D/F/G/H"+"R"+"T"+"Y"+"U"| plays the key with fret 3"
 
-Start by trying out the base notes with "D","F","G","H", then try pressing one of them and swiping the keyboard left to right starting with "R". 
+Start by trying out the base notes with "D","F","G","H", then try pressing one of them and swiping the keyboard left to right starting with "R".
 
 
 <!-- Anything else a player needs to know: how to get started, combinations of keys, a good thing to try first. -->
